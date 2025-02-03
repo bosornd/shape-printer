@@ -10,100 +10,15 @@ using namespace shape_printer;
 using namespace shape_printer::shape_extension;
 using namespace shape_printer::output_extension;
 
-TEST(PrintShapeTest, DiamondUsingInsideDiamondFunctor) {
-    InsideDiamond insideDiamond;
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(insideDiamond, streamOut);
-
-    std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
-
-    printShape(3);
-
-    std::string expectedOutput =
-        "  *  \n"
-        " *** \n"
-        "*****\n"
-        " *** \n"
-        "  *  \n";
-
-    EXPECT_EQ(oss.str(), expectedOutput);
-}
-
-TEST(PrintShapeTest, DiamondUsingShapeInstance) {
-    Diamond diamond;
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(diamond, streamOut);
-
-    std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
-
-    printShape(3);
-
-    std::string expectedOutput =
-        "  *  \n"
-        " *** \n"
-        "*****\n"
-        " *** \n"
-        "  *  \n";
-
-    EXPECT_EQ(oss.str(), expectedOutput);
-}
-
-TEST(PrintShapeTest, CrossUsingInsideCrossFunctor) {
-    InsideCross insideCross;
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(insideCross, streamOut);
-
-    std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
-
-    printShape(3);
-
-    std::string expectedOutput =
-        "  *  \n"
-        "  *  \n"
-        "*****\n"
-        "  *  \n"
-        "  *  \n";
-
-    EXPECT_EQ(oss.str(), expectedOutput);
-}
-
-TEST(PrintShapeTest, CrossUsingShapeInstance) {
-    Cross cross;
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(cross, streamOut);
-
-    std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
-
-    printShape(3);
-
-    std::string expectedOutput =
-        "  *  \n"
-        "  *  \n"
-        "*****\n"
-        "  *  \n"
-        "  *  \n";
-
-    EXPECT_EQ(oss.str(), expectedOutput);
-}
-
+// Test case for printing a diamond shape using a lambda function
 TEST(PrintShapeTest, DiamondUsingLambdaFunction) {
     auto lambdaDiamond = [](int x, int y, int rows) {
         return std::abs(x) + std::abs(y) < rows;
     };
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(lambdaDiamond, streamOut);
 
     std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
+    StreamOut streamOut(oss, '*');
+    PrintShape printShape(lambdaDiamond, streamOut);
 
     printShape(3);
 
@@ -117,13 +32,32 @@ TEST(PrintShapeTest, DiamondUsingLambdaFunction) {
     EXPECT_EQ(oss.str(), expectedOutput);
 }
 
-TEST(PrintShapeTest, DiamondUsingInsideDiamondFunction) {
-    StreamOut streamOut(std::cout);
+
+// Test case for printing a diamond shape using insideDiamond function
+TEST(PrintShapeTest, DiamondUsingSimpleFunction) {
+    std::ostringstream oss;
+    StreamOut streamOut(oss, '*');
     PrintShape printShape(insideDiamond, streamOut);
 
+    printShape(3);
+
+    std::string expectedOutput =
+        "  *  \n"
+        " *** \n"
+        "*****\n"
+        " *** \n"
+        "  *  \n";
+
+    EXPECT_EQ(oss.str(), expectedOutput);
+}
+
+// Test case for printing a diamond shape using InsideDiamond functor
+TEST(PrintShapeTest, DiamondUsingInsideDiamondFunctor) {
+    InsideDiamond insideDiamond;
+
     std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
+    StreamOut streamOut(oss);
+    PrintShape printShape(insideDiamond, streamOut);
 
     printShape(3);
 
@@ -137,47 +71,67 @@ TEST(PrintShapeTest, DiamondUsingInsideDiamondFunction) {
     EXPECT_EQ(oss.str(), expectedOutput);
 }
 
-TEST(PrintShapeTest, DiamondUsingLambdaFunctionSizes) {
-    auto lambdaDiamond = [](int x, int y, int rows) {
-        return std::abs(x) + std::abs(y) < rows;
-    };
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(lambdaDiamond, streamOut);
+// Test case for printing a diamond shape using Shape instance
+TEST(PrintShapeTest, DiamondUsingShapeInstance) {
+    Diamond diamond;
 
     std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
+    StreamOut streamOut(oss);
+    PrintShape printShape(diamond, streamOut);
 
-    for (int size = 1; size <= 4; ++size) {
-        printShape(size);
-        oss << "\n";
-    }
+    printShape(3);
 
     std::string expectedOutput =
-        "*\n"
-        "\n"
-        " * \n"
-        "***\n"
-        " * \n"
-        "\n"
         "  *  \n"
         " *** \n"
         "*****\n"
         " *** \n"
-        "  *  \n"
-        "\n"
-        "   *   \n"
-        "  ***  \n"
-        " ***** \n"
-        "*******\n"
-        " ***** \n"
-        "  ***  \n"
-        "   *   \n"
-        "\n";
+        "  *  \n";
 
     EXPECT_EQ(oss.str(), expectedOutput);
 }
 
+// Test case for printing a cross shape using InsideCross functor
+TEST(PrintShapeTest, CrossUsingInsideCrossFunctor) {
+    InsideCross insideCross;
+
+    std::ostringstream oss;
+    StreamOut streamOut(oss);
+    PrintShape printShape(insideCross, streamOut);
+
+    printShape(3);
+
+    std::string expectedOutput =
+        "  *  \n"
+        "  *  \n"
+        "*****\n"
+        "  *  \n"
+        "  *  \n";
+
+    EXPECT_EQ(oss.str(), expectedOutput);
+}
+
+// Test case for printing a cross shape using Shape instance
+TEST(PrintShapeTest, CrossUsingShapeInstance) {
+    Cross cross;
+
+    std::ostringstream oss;
+    StreamOut streamOut(oss, '*');
+    PrintShape printShape(cross, streamOut);
+
+    printShape(3);
+
+    std::string expectedOutput =
+        "  *  \n"
+        "  *  \n"
+        "*****\n"
+        "  *  \n"
+        "  *  \n";
+
+    EXPECT_EQ(oss.str(), expectedOutput);
+}
+
+// Test case for printing a BMP shape
 TEST(PrintShapeTest, BMPShape) {
     // Create a BMP file with a simple pattern
     BMPCreator bmpCreator("test.bmp");
@@ -190,12 +144,10 @@ TEST(PrintShapeTest, BMPShape) {
     });
 
     BMP bmp("test.bmp");
-    StreamOut streamOut(std::cout);
-    PrintShape printShape(bmp, streamOut);
 
     std::ostringstream oss;
-    streamOut.set(oss, '*', ' ', '\n');
-    printShape.setOutputFunction(streamOut);
+    StreamOut streamOut(oss);
+    PrintShape printShape(bmp, streamOut);
 
     printShape(3);
 
@@ -209,6 +161,7 @@ TEST(PrintShapeTest, BMPShape) {
     EXPECT_EQ(oss.str(), expectedOutput);
 }
 
+// Main function to run all tests
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

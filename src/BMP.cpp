@@ -7,10 +7,12 @@
 namespace shape_printer {
 namespace shape_extension {
 
+// Constructor that initializes the BMP object and loads the BMP file
 BMP::BMP(const std::string& filename) : filename(filename) {
     loadBMP();
 }
 
+// Determines if a point is inside the BMP shape
 bool BMP::inside(int x, int y, int rows) const {
     int centerX = width / 2;
     int centerY = height / 2;
@@ -24,14 +26,17 @@ bool BMP::inside(int x, int y, int rows) const {
     return false;
 }
 
+// Gets the width of the BMP image
 int BMP::getWidth() const {
     return width;
 }
 
+// Gets the height of the BMP image
 int BMP::getHeight() const {
     return height;
 }
 
+// Loads the BMP file and populates the image vector
 void BMP::loadBMP() {
     std::ifstream file(filename, std::ios::in | std::ios::binary);
     if (!file) {

@@ -6,12 +6,15 @@
 namespace shape_printer {
 namespace output_extension {
 
+// Constructor accepting a filename for the BMP file
 BMPCreator::BMPCreator(const std::string& filename) : filename(filename) {}
 
+// Creates the BMP file from the shape
 void BMPCreator::operator()(const std::vector<std::vector<bool>>& image) const {
     writeBMP(image);
 }
 
+// Writes the BMP file
 void BMPCreator::writeBMP(const std::vector<std::vector<bool>>& image) const {
     int width = image[0].size();
     int height = image.size();
