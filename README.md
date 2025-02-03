@@ -6,7 +6,7 @@ Shape Printer is a C++ project that allows you to generate and print various sha
 
 - Define custom shapes using lambda functions or classes.
 - Print shapes to the console or to BMP files.
-- Easily extendable to add new shapes and output formats.
+- **Easily extendable to add new shapes and output formats**.
 
 ## Shapes
 
@@ -14,7 +14,7 @@ The project includes the following shapes:
 
 - **Diamond**: A diamond shape defined by the sum of the absolute values of the coordinates.
 - **Cross**: A cross shape defined by the coordinates being zero.
-- **BMP**: A bitmap shape defined by BMP file.
+- **BMP**: A bitmap shape defined in BMP file.
 
 ## Output Extensions
 
@@ -53,6 +53,6 @@ The project includes the following output extensions:
 
 ## Running the Application
 
-After building the project, you can run the application by executing the generated executable in the build directory. The application will prompt you to enter the number of rows for the diamond shape, and it will print the diamond to the console.
+After building the project, you can run the application by executing the generated executable in the build directory. The application will print shapes to the console, the file(output.txt) and the file(output.bmp).
 
-Enjoy printing your diamond shapes!
+Enjoy extending shapes and output formats!
