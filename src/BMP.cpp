@@ -60,7 +60,7 @@ void BMP::loadBMP() {
         for (int j = 0; j < width; j++) {
             unsigned char pixel[4];
             file.read(reinterpret_cast<char*>(pixel), 4);
-            image[i][j] = (pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0);
+            image[i][j] = (pixel[3] != 0);              // Check if the alpha channel is not 0
         }
     }
 

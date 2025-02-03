@@ -6,12 +6,17 @@
 namespace shape_printer {
 namespace output_extension {
 
-// Constructor accepting a filename for the BMP file
-BMPCreator::BMPCreator(const std::string& filename) : filename(filename) {}
+// Constructor accepting a filename for the BMP file and a color
+BMPCreator::BMPCreator(const std::string& filename, uint32_t color) : filename(filename), color(color) {}
 
 // Creates the BMP file from the shape
 void BMPCreator::operator()(const std::vector<std::vector<bool>>& image) const {
     writeBMP(image);
+}
+
+// Sets the color using RGBA values
+void BMPCreator::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    color = (a << 24) | (r << 16) | (g << 8) | b;
 }
 
 // Writes the BMP file
@@ -60,11 +65,10 @@ void BMPCreator::writeBMP(const std::vector<std::vector<bool>>& image) const {
     file.write(reinterpret_cast<const char*>(bmpfileheader), sizeof(bmpfileheader));
     file.write(reinterpret_cast<const char*>(bmpinfoheader), sizeof(bmpinfoheader));
 
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            unsigned char color = image[i][j] ? 0 : 255;
-            unsigned char pixel[4] = { color, color, color, 255 }; // 32 bits per pixel (RGBA)
-            file.write(reinterpret_cast<const char*>(pixel), sizeof(pixel));
+    for (int y = height - 1; y >= 0; y--) {
+        for (int x = 0; x < width; x++) {
+            uint32_t pixelColor = image[y][x] ? color : 0x000000;
+            file.write(reinterpret_cast<const char*>(&pixelColor), 4);
         }
     }
 

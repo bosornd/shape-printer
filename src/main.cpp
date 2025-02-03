@@ -48,6 +48,7 @@ int main() {
 
     // Print diamond shape to a BMP file using BMPCreator
     BMPCreator bmpCreator("output.bmp");
+    bmpCreator.setColor(0xFF, 0, 0);        // Red color
     printShape.setOutputFunction(bmpCreator);
     std::cout << "\nDiamond written to output.bmp, size 10:\n";
     printShape(10);
