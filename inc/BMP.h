@@ -23,12 +23,12 @@ public:
 
     /**
      * @brief Determines if a point is inside the BMP shape.
+     * @param rows The number of rows in the shape.
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
-     * @param rows The number of rows in the shape.
      * @return True if the point is inside the shape, false otherwise.
      */
-    bool inside(int x, int y, int rows) const override;
+    bool inside(int rows, int x, int y) const override;
 
     /**
      * @brief Gets the width of the BMP image.

@@ -16,23 +16,23 @@ PrintShape::PrintShape(const Shape& shape, std::function<void(const std::vector<
     insideShape = std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
-// Sets a new function to determine if a point is inside the shape
+// Set a new function to determine if a point is inside the shape
 void PrintShape::setInsideShape(std::function<bool(int, int, int)> newInsideShape) {
     insideShape = newInsideShape;
 }
 
-// Sets a new Shape object to determine if a point is inside the shape
+// Set a new Shape object to determine if a point is inside the shape
 void PrintShape::setInsideShape(const Shape& shape) {
     // Bind the Shape's inside method to the insideShape function
     insideShape = std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
-// Sets a new output function
+// Set a new output function
 void PrintShape::setOutputFunction(std::function<void(const std::vector<std::vector<bool>>&)> outputFunction) {
     output = outputFunction;
 }
 
-// Prints the shape with the given number of rows
+// Operator to print the shape with the given number of rows
 void PrintShape::operator()(int rows) const {
     // Create a 2D vector to represent the image
     std::vector<std::vector<bool>> image(2 * rows - 1, std::vector<bool>(2 * rows - 1, false));
@@ -41,7 +41,7 @@ void PrintShape::operator()(int rows) const {
     for (int i = -rows + 1; i < rows; i++) {
         for (int j = -rows + 1; j < rows; j++) {
             // Check if the point is inside the shape
-            if (insideShape(i, j, rows)) {
+            if (insideShape(rows, i, j)) {
                 image[i + rows - 1][j + rows - 1] = true;
             }
         }

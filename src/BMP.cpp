@@ -13,7 +13,7 @@ BMP::BMP(const std::string& filename) : filename(filename) {
 }
 
 // Determines if a point is inside the BMP shape
-bool BMP::inside(int x, int y, int rows) const {
+bool BMP::inside(int rows, int x, int y) const {
     int centerX = width / 2;
     int centerY = height / 2;
 

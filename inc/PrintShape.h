@@ -14,12 +14,12 @@ class InsideShape {
 public:
     /**
      * @brief Pure virtual function to determine if a point is inside the shape.
+     * @param rows The number of rows in the shape.
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
-     * @param rows The number of rows in the shape.
      * @return True if the point is inside the shape, false otherwise.
      */
-    virtual bool operator()(int x, int y, int rows) const = 0;
+    virtual bool operator()(int rows, int x, int y) const = 0;
 };
 
 /**
@@ -30,12 +30,12 @@ class Shape {
 public:
     /**
      * @brief Pure virtual function to determine if a point is inside the shape.
+     * @param rows The number of rows in the shape.
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
-     * @param rows The number of rows in the shape.
      * @return True if the point is inside the shape, false otherwise.
      */
-    virtual bool inside(int x, int y, int rows) const = 0;
+    virtual bool inside(int rows, int x, int y) const = 0;
 };
 
 /**

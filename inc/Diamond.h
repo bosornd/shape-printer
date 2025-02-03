@@ -8,12 +8,12 @@ namespace shape_extension {
 
 /**
  * @brief Function to determine if a point is inside a diamond shape.
+ * @param rows The number of rows in the shape.
  * @param x The x-coordinate of the point.
  * @param y The y-coordinate of the point.
- * @param rows The number of rows in the shape.
  * @return True if the point is inside the diamond shape, false otherwise.
  */
-bool insideDiamond(int x, int y, int rows);
+bool insideDiamond(int rows, int x, int y);
 
 /**
  * @class InsideDiamond
@@ -23,12 +23,12 @@ class InsideDiamond : public InsideShape {
 public:
     /**
      * @brief Determines if a point is inside the diamond shape.
+     * @param rows The number of rows in the shape.
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
-     * @param rows The number of rows in the shape.
      * @return True if the point is inside the diamond shape, false otherwise.
      */
-    bool operator()(int x, int y, int rows) const;
+    bool operator()(int rows, int x, int y) const;
 };
 
 /**
@@ -39,12 +39,12 @@ class Diamond : public Shape {
 public:
     /**
      * @brief Determines if a point is inside the diamond shape.
+     * @param rows The number of rows in the shape.
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
-     * @param rows The number of rows in the shape.
      * @return True if the point is inside the diamond shape, false otherwise.
      */
-    bool inside(int x, int y, int rows) const override;
+    bool inside(int rows, int x, int y) const override;
 };
 
 } // namespace shape_extension
