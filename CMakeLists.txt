@@ -3,11 +3,15 @@ cmake_minimum_required(VERSION 3.10)
 # Set the project name
 project(shape-printer)
 
-# Add the executable
-add_executable(shape-printer src/main.cpp src/Diamond.cpp src/PrintShape.cpp src/Cross.cpp src/StreamOut.cpp src/BMPCreator.cpp src/BMP.cpp)
+# Add source files
+file(GLOB SOURCES "src/*.cpp")
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
-# Include directories
-target_include_directories(shape-printer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc)
+# Add include directories
+include_directories(inc)
+
+# Add the executable
+add_executable(shape-printer ${SOURCES} src/main.cpp)
 
 # Add Google Test
 include(FetchContent)
@@ -20,6 +24,11 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Add the test executable
-add_executable(tests test/PrintShapeTest.cpp src/PrintShape.cpp src/StreamOut.cpp src/Diamond.cpp src/Cross.cpp src/BMPCreator.cpp src/BMP.cpp)
-target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc)
-target_link_libraries(tests gtest gtest_main)
+add_executable(shape-printer-tests test/main.cpp test/PrintShapeTest.cpp ${SOURCES})
+target_link_libraries(shape-printer-tests gtest gtest_main)
+
+# Enable testing
+enable_testing()
+
+# Add tests
+add_test(NAME PrintShapeTest COMMAND shape-printer-tests)
