@@ -12,7 +12,7 @@ using namespace shape_printer::output_extension;
 
 // Test case for printing a diamond shape using a lambda function
 TEST(PrintShapeTest, DiamondUsingLambdaFunction) {
-    auto lambdaDiamond = [](int x, int y, int rows) {
+    auto lambdaDiamond = [](int rows, int x, int y) {
         return std::abs(x) + std::abs(y) < rows;
     };
 
