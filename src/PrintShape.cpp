@@ -40,10 +40,8 @@ void PrintShape::operator()(int rows) const {
     // Iterate through each point in the image
     for (int i = -rows + 1; i < rows; i++) {
         for (int j = -rows + 1; j < rows; j++) {
-            // Check if the point is inside the shape
-            if (insideShape(rows, i, j)) {
-                image[i + rows - 1][j + rows - 1] = true;
-            }
+            // Set the point to true if it is inside the shape
+            image[i + rows - 1][j + rows - 1] = insideShape(rows, i, j);
         }
     }
 
