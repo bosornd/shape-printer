@@ -1,20 +1,34 @@
-#include "PrintShape.h"
+#include "Shape.h"
 
 #include <iostream>
 #include <cmath>
 
-int main() {
-    PrintShape printer(
-        [](int rows, int x, int y){ return (abs(x) + abs(y) < rows); },  // inside function
-        [](const std::vector<std::vector<bool>>& image) {                // output function
-            for (const auto& row : image) {
-                for (bool pixel : row) {
-                    std::cout << (pixel ? '*' : ' ');
-                }
-                std::cout << std::endl;
-            }
-        });
-    printer(5);
+class Diamond : public Shape {
+public:
+    Diamond(const Output& output) : Shape(output) {}
     
+protected:
+    bool inside(int rows, int x, int y) const override {
+        return (abs(x) + abs(y) < rows);
+    }
+};
+
+class StreamOut : public Output {
+public:
+    void operator()(const std::vector<std::vector<bool>>& image) const override {
+        for (const auto& row : image) {
+            for (bool pixel : row) {
+                std::cout << (pixel ? '*' : ' ');
+            }
+            std::cout << std::endl;
+        }
+    }
+};
+
+int main() {
+    StreamOut streamOut;
+    Diamond diamond(streamOut);
+    diamond.print(5);
+
     return 0;
 }
