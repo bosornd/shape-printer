@@ -7,6 +7,18 @@ namespace output_extension {
 StreamOut::StreamOut(std::ostream& os, char inChar, char outChar, char eolChar)
     : os(&os), inChar(inChar), outChar(outChar), eolChar(eolChar) {}
 
+// Sets the output stream for the object
+void StreamOut::set(std::ostream& os) {
+    this->os = &os;
+}
+
+// Sets the characters used for printing shapes
+void StreamOut::set(char inChar, char outChar, char eolChar) {
+    this->inChar = inChar;
+    this->outChar = outChar;
+    this->eolChar = eolChar;
+}
+
 // Outputs the shape to the stream
 void StreamOut::operator()(const std::vector<std::vector<bool>>& image) const {
     for (const auto& row : image) {

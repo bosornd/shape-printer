@@ -12,12 +12,12 @@ using namespace shape_printer::output_extension;
 
 int main() {
     // Create a StreamOut object to print to the console
-    StreamOut consoleOut;
+    StreamOut streamOut;
 
     // Case 1. print diamond shape using a lambda function
     PrintShape printShape([](int x, int y, int rows) {
         return std::abs(x) + std::abs(y) < rows;
-    }, consoleOut);
+    }, streamOut);
     std::cout << "Diamond using lambda function, size 1:\n";
     printShape(1);
 
@@ -40,8 +40,9 @@ int main() {
 
     // Print diamond shape to a file using StreamOut
     std::ofstream file("output.txt");
-    StreamOut fileStreamOut(file, 'o');
-    printShape.setOutputFunction(fileStreamOut);
+    streamOut.set(file);
+    streamOut.set('o');
+    printShape.setOutputFunction(streamOut);
     std::cout << "\nDiamond written to output.txt, size 5:\n";
     printShape(5);
     file.close();
@@ -56,7 +57,8 @@ int main() {
     // Load diamond shape from BMP file and print to console
     BMP bmp("output.bmp");
     printShape.setInsideShape(bmp);
-    printShape.setOutputFunction(consoleOut);
+    streamOut.set(std::cout);
+    printShape.setOutputFunction(streamOut);
     std::cout << "\nDiamond loaded from output.bmp:\n";
     printShape(bmp.getWidth() / 2 + 1);
 
