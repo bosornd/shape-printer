@@ -35,15 +35,13 @@ void PrintShape::setOutputFunction(std::function<void(const std::vector<std::vec
 // Operator to print the shape with the given number of rows
 void PrintShape::operator()(int rows) const {
     // Create a 2D vector to represent the image
-    std::vector<std::vector<bool>> image(2 * rows - 1, std::vector<bool>(2 * rows - 1, false));
+    std::vector<std::vector<bool>> image(2 * rows - 1, std::vector<bool>(2 * rows - 1));
 
     // Iterate through each point in the image
-    for (int i = -rows + 1; i < rows; i++) {
-        for (int j = -rows + 1; j < rows; j++) {
-            // Check if the point is inside the shape
-            if (insideShape(rows, i, j)) {
-                image[i + rows - 1][j + rows - 1] = true;
-            }
+    for (int y = -rows + 1; y < rows; y++) {
+        for (int x = -rows + 1; x < rows; x++) {
+            // Set the point to true if it is inside the shape
+            image[y + rows - 1][x + rows - 1] = insideShape(rows, x, y);
         }
     }
 
