@@ -1,0 +1,27 @@
+@startuml
+
+package shape_printer {
+    class PrintShape
+    class InsideShape
+    class Shape
+    class Output
+}
+
+package shape_printer::shape_extension {
+    class InsideDiamond
+    class Diamond
+    class InsideCross
+    class Cross
+    class Image
+    class BMP
+}
+
+package shape_printer::output_extension {
+    class StreamOut
+    class BMPCreator
+}
+
+shape_printer <|-- shape_printer::shape_extension
+shape_printer <|-- shape_printer::output_extension
+
+@enduml

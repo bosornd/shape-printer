@@ -1,0 +1,30 @@
+@startuml
+
+class Output {
+    {abstract} void operator()(const std::vector<std::vector<bool>>& image) const
+}
+
+class StreamOut {
+    StreamOut(std::ostream& os = std::cout, char inChar = '*', char outChar = ' ', char eolChar = '\n')
+    void set(std::ostream& os = std::cout)
+    void set(char inChar = '*', char outChar = ' ', char eolChar = '\n')
+    void operator()(const std::vector<std::vector<bool>>& image) const
+    -std::ostream* os
+    -char inChar
+    -char outChar
+    -char eolChar
+}
+
+class BMPCreator {
+    BMPCreator(const std::string& filename, uint32_t color = 0xFFFFFFFF)
+    void operator()(const std::vector<std::vector<bool>>& image) const
+    void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+    -std::string filename
+    -uint32_t color
+    -void writeBMP(const std::vector<std::vector<bool>>& image) const
+}
+
+Output <|-- StreamOut
+Output <|-- BMPCreator
+
+@enduml

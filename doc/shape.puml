@@ -1,0 +1,48 @@
+@startuml
+
+class InsideShape {
+    {abstract} bool operator()(int rows, int x, int y) const
+}
+
+class Shape {
+    {abstract} bool inside(int rows, int x, int y) const
+}
+
+class InsideDiamond {
+    bool operator()(int rows, int x, int y) const
+}
+
+class Diamond {
+    bool inside(int rows, int x, int y) const
+}
+
+class InsideCross {
+    bool operator()(int rows, int x, int y) const
+}
+
+class Cross {
+    bool inside(int rows, int x, int y) const
+}
+
+class Image {
+    Image(int width, int height)
+    Image(const std::vector<std::vector<bool>>& image)
+    bool inside(int rows, int x, int y) const
+    void setPixel(int x, int y, bool value)
+    int getWidth() const
+    int getHeight() const
+}
+
+class BMP {
+    BMP(const std::string& filename)
+    std::vector<std::vector<bool>> loadBMP(const std::string& filename)
+}
+
+InsideShape <|-- InsideDiamond
+InsideShape <|-- InsideCross
+Shape <|-- Diamond
+Shape <|-- Cross
+Shape <|-- Image
+Image <|-- BMP
+
+@enduml
