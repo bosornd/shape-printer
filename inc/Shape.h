@@ -24,11 +24,6 @@ protected:
     // True if the point is inside the shape, false otherwise.
     virtual bool inside(int rows, int x, int y) const = 0;
 
-    // Return the image of the shape for the given number of rows.
-    // Shape is defined by the inside() method.
-    // The size of the shape is [2 * rows - 1] x [2 * rows - 1].
-    std::vector<std::vector<bool>> image(int rows) const;
-
 private:
     const Output& output; ///< Reference to the function to output the shape.
 };
