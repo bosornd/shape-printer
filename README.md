@@ -29,6 +29,105 @@ shape-printer/
 └── CMakeLists.txt              # CMake build script
 ```
 
+## Designs
+```mermaid
+graph TB
+   subgraph shape_printer
+      PrintShape ~~~ InsideShape ~~~ Shape ~~~ Output
+   end
+
+   subgraph shape_printer_shape_extension [shape_printer::shape_extension]
+      InsideDiamond ~~~ Diamond
+      InsideCross ~~~ Cross
+      Image ~~~ BMP
+   end
+
+   subgraph shape_printer_output_extension [shape_printer::output_extension]
+      StreamOut ~~~ BMPCreator
+   end
+
+   shape_printer_shape_extension --extends--> shape_printer
+   shape_printer_output_extension --extends--> shape_printer
+```
+```mermaid
+classDiagram
+    class InsideShape {
+        <<abstract>>
+        bool operator()(int rows, int x, int y) const
+    }
+
+    class Shape {
+        <<abstract>>
+        bool inside(int rows, int x, int y) const
+    }
+
+    class InsideDiamond {
+        bool operator()(int rows, int x, int y) const
+    }
+
+    class Diamond {
+        bool inside(int rows, int x, int y) const
+    }
+
+    class InsideCross {
+        bool operator()(int rows, int x, int y) const
+    }
+
+    class Cross {
+        bool inside(int rows, int x, int y) const
+    }
+
+    class Image {
+        Image(int width, int height)
+        Image(const std::vector&lt;std::vector&lt;bool>>& image)
+        bool inside(int rows, int x, int y) const
+        void setPixel(int x, int y, bool value)
+        int getWidth() const
+        int getHeight() const
+    }
+
+    class BMP {
+        BMP(const std::string& filename)
+        std::vector&lt;std::vector&lt;bool>> loadBMP(const std::string& filename)
+    }
+
+    InsideShape <|-- InsideDiamond
+    InsideShape <|-- InsideCross
+    Shape <|-- Diamond
+    Shape <|-- Image
+    Image <|-- BMP
+    Shape <|-- Cross
+```
+```mermaid
+classDiagram
+    class Output {
+        <<abstract>>
+        void operator()(const std::vector&lt;std::vector&lt;bool&gt;&gt;& image) const
+    }
+
+    class StreamOut {
+        StreamOut(std::ostream& os = std::cout, char inChar = '*', char outChar = ' ', char eolChar = '\n')
+        void set(std::ostream& os = std::cout)
+        void set(char inChar = '*', char outChar = ' ', char eolChar = '\n')
+        void operator()(const std::vector&lt;std::vector&lt;bool&gt;&gt;& image) const
+        -std::ostream* os
+        -char inChar
+        -char outChar
+        -char eolChar
+    }
+
+    class BMPCreator {
+        BMPCreator(const std::string& filename, uint32_t color = 0xFFFFFFFF)
+        void operator()(const std::vector&lt;std::vector&lt;bool&gt;&gt;& image) const
+        void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+        -std::string filename
+        -uint32_t color
+        -void writeBMP(const std::vector&lt;std::vector&lt;bool&gt;&gt;& image) const
+    }
+
+    Output <|-- StreamOut
+    Output <|-- BMPCreator
+```
 ## Features
 
 - Define custom shapes using lambda functions or classes.
