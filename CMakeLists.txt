@@ -1,7 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(shape-printer)
+# Set the project name
+project(ShapePrinter)
 
-set(CMAKE_CXX_STANDARD 11)
+# Add the executable
+add_executable(ShapePrinter
+    src/main.cpp
+    src/PrintShape.cpp
+    src/Diamond.cpp
+    src/StreamOut.cpp
+)
 
-add_executable(shape-printer src/main.cpp)
+# Include directories
+target_include_directories(ShapePrinter PRIVATE inc)
