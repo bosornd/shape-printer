@@ -2,6 +2,19 @@
 #include <cmath>
 #include <functional>
 
+// Define the InsideShape interface as a functor
+struct InsideShape {
+    virtual bool operator()(int x, int y, int n) const = 0;
+    virtual ~InsideShape() = default;
+};
+
+// Define the Shape interface
+class Shape {
+public:
+    virtual bool inside(int x, int y, int n) const = 0;
+    virtual ~Shape() = default;
+};
+
 bool insideDiamond(int x, int y, int n) {
     return std::abs(x) + std::abs(y) < n;
 }
@@ -18,12 +31,36 @@ void printShape(int n, std::function<bool(int, int, int)> insideShape) {
     }
 }
 
-int main() {
-    int n;
-    std::cout << "Enter the number of rows for the diamond: ";
-    std::cin >> n;
+// Define the InsideDiamond functor extending InsideShape
+struct InsideDiamond : public InsideShape {
+    bool operator()(int x, int y, int n) const override {
+        return std::abs(x) + std::abs(y) < n;
+    }
+};
 
-    printShape(n, insideDiamond);
+// Define the Diamond class extending Shape
+class Diamond : public Shape {
+public:
+    bool inside(int x, int y, int n) const override {
+        return std::abs(x) + std::abs(y) < n;
+    }
+};
+
+int main() {
+    // case 1. print a diamond shape using lambda function
+    printShape(1, [](int x, int y, int n) {
+        return std::abs(x) + std::abs(y) < n;
+    });
+
+    // case 2. print a diamond shape using a named function
+    printShape(2, insideDiamond);
+
+    // case 3. print a diamond shape using a functor
+    printShape(3, InsideDiamond());
+
+    // case 4. print a diamond shape using a Diamond class
+    Diamond diamond;
+    printShape(4, std::bind(&Diamond::inside, &diamond, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     return 0;
 }
