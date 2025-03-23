@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <functional>
+#include <fstream>
 
 // Define the InsideShape interface as a functor
 class InsideShape {
@@ -23,13 +24,22 @@ bool insideDiamond(int x, int y, int n) {
 // Define the PrintShape functor with a member variable to store insideShape function
 class PrintShape {
     std::function<bool(int, int, int)> insideShape;
+    std::ostream* output;
+    std::string inChar;
+    std::string outChar;
+    std::string eolChar;
 
 public:
     // Constructor using std::function
-    PrintShape(std::function<bool(int, int, int)> insideShape) : insideShape(insideShape) {}
+    PrintShape(std::function<bool(int, int, int)> insideShape, std::ostream& output = std::cout, 
+               std::string inChar = "*", std::string outChar = " ", std::string eolChar = "\n") 
+        : insideShape(insideShape), output(&output), inChar(inChar), outChar(outChar), eolChar(eolChar) {}
 
     // Constructor using Shape instance
-    PrintShape(const Shape& shape) : insideShape(std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)) {}
+    PrintShape(const Shape& shape, std::ostream& output = std::cout, 
+               std::string inChar = "*", std::string outChar = " ", std::string eolChar = "\n") 
+        : insideShape(std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)), 
+          output(&output), inChar(inChar), outChar(outChar), eolChar(eolChar) {}
 
     void setInsideShape(std::function<bool(int, int, int)> newInsideShape) {
         insideShape = newInsideShape;
@@ -39,15 +49,25 @@ public:
         insideShape = std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     }
 
+    void setOutput(std::ostream& newOutput) {
+        output = &newOutput;
+    }
+
+    void setCharacters(const std::string& newInChar = "*", const std::string& newOutChar = " ", const std::string& newEolChar = "\n") {
+        inChar = newInChar;
+        outChar = newOutChar;
+        eolChar = newEolChar;
+    }
+
     void operator()(int n) const {
         for (int y = n - 1; y >= -n + 1; y--) {
             for (int x = -n + 1; x <= n - 1; x++) {
                 if (insideShape(x, y, n))
-                    std::cout << "*";
+                    *output << inChar;
                 else
-                    std::cout << " ";
+                    *output << outChar;
             }
-            std::cout << std::endl;
+            *output << eolChar;
         }
     }
 };
@@ -85,6 +105,15 @@ int main() {
     Diamond diamond;
     printShape.setInsideShape(diamond);
     printShape(4);
+
+    // change printing characters
+    printShape.setCharacters("O", ".");
+    printShape(5);
+
+    // print a diamond shape to a file
+    std::ofstream file("diamond.txt");
+    printShape.setOutput(file);
+    printShape(10);
 
     return 0;
 }
