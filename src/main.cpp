@@ -3,7 +3,8 @@
 #include <functional>
 
 // Define the InsideShape interface as a functor
-struct InsideShape {
+class InsideShape {
+public:
     virtual bool operator()(int x, int y, int n) const = 0;
     virtual ~InsideShape() = default;
 };
@@ -19,20 +20,41 @@ bool insideDiamond(int x, int y, int n) {
     return std::abs(x) + std::abs(y) < n;
 }
 
-void printShape(int n, std::function<bool(int, int, int)> insideShape) {
-    for (int y = n - 1; y >= -n + 1; y--) {
-        for (int x = -n + 1; x <= n - 1; x++) {
-            if (insideShape(x, y, n))
-                std::cout << "*";
-            else
-                std::cout << " ";
-        }
-        std::cout << std::endl;
+// Define the PrintShape functor with a member variable to store insideShape function
+class PrintShape {
+    std::function<bool(int, int, int)> insideShape;
+
+public:
+    // Constructor using std::function
+    PrintShape(std::function<bool(int, int, int)> insideShape) : insideShape(insideShape) {}
+
+    // Constructor using Shape instance
+    PrintShape(const Shape& shape) : insideShape(std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)) {}
+
+    void setInsideShape(std::function<bool(int, int, int)> newInsideShape) {
+        insideShape = newInsideShape;
     }
-}
+
+    void setInsideShape(const Shape& shape) {
+        insideShape = std::bind(&Shape::inside, &shape, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    }
+
+    void operator()(int n) const {
+        for (int y = n - 1; y >= -n + 1; y--) {
+            for (int x = -n + 1; x <= n - 1; x++) {
+                if (insideShape(x, y, n))
+                    std::cout << "*";
+                else
+                    std::cout << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+};
 
 // Define the InsideDiamond functor extending InsideShape
-struct InsideDiamond : public InsideShape {
+class InsideDiamond : public InsideShape {
+public:
     bool operator()(int x, int y, int n) const override {
         return std::abs(x) + std::abs(y) < n;
     }
@@ -48,19 +70,21 @@ public:
 
 int main() {
     // case 1. print a diamond shape using lambda function
-    printShape(1, [](int x, int y, int n) {
-        return std::abs(x) + std::abs(y) < n;
-    });
+    PrintShape printShape([](int x, int y, int n) { return std::abs(x) + std::abs(y) < n; });
+    printShape(1);
 
-    // case 2. print a diamond shape using a named function
-    printShape(2, insideDiamond);
+    // case 2. print a diamond shape using general function
+    printShape.setInsideShape(insideDiamond);
+    printShape(2);
 
-    // case 3. print a diamond shape using a functor
-    printShape(3, InsideDiamond());
+    // case 3. print a diamond shape using InsideShape functor
+    printShape.setInsideShape(InsideDiamond());
+    printShape(3);
 
-    // case 4. print a diamond shape using a Diamond class
+    // case 4. print a diamond shape using Shape instance
     Diamond diamond;
-    printShape(4, std::bind(&Diamond::inside, &diamond, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    printShape.setInsideShape(diamond);
+    printShape(4);
 
     return 0;
 }
