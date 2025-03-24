@@ -6,6 +6,8 @@
 #include "Diamond.h"
 #include "StreamOut.h"
 #include "BMPCreator.h"
+#include "Image.h"
+#include "BMP.h"
 
 using namespace shape_printer;
 using namespace shape_printer::shape_extension;
@@ -31,16 +33,20 @@ int main() {
     printShape.setInsideShape(diamond);
     printShape(4);
 
+    // print a shape using Image class
+    Image image({{false, false, true, false, false},
+                 {false, true, false, true, false},
+                 {true, false, false, false, true},
+                 {false, true, false, true, false},
+                 {false, false, true, false, false}});
+    printShape.setInsideShape(image);
+    printShape(image.getSize());
+
     // change printing characters
     streamOut.setCharacters("O", ".");
     printShape.setOutput(streamOut);
+    printShape.setInsideShape(diamond);
     printShape(5);
-
-    // print a diamond shape to a file
-    std::ofstream file("diamond.txt");
-    streamOut.setOutput(file);
-    printShape.setOutput(streamOut);
-    printShape(10);
 
     // print a diamond shape to a BMP file
     BMPCreator bmpCreator("diamond.bmp");
@@ -48,5 +54,17 @@ int main() {
     printShape.setOutput(bmpCreator);
     printShape(20);
 
+    // print a shape using BMP class
+    BMP bmp("diamond.bmp");
+    printShape.setInsideShape(bmp);
+    printShape.setOutput(streamOut);
+    printShape(bmp.getSize());
+
+    // print a diamond shape to a file
+    std::ofstream file("diamond.txt");
+    streamOut.setOutput(file);
+    printShape.setOutput(streamOut);
+    printShape(10);
+    
     return 0;
 }
