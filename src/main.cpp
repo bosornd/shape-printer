@@ -5,6 +5,7 @@
 #include "PrintShape.h"
 #include "Diamond.h"
 #include "StreamOut.h"
+#include "BMPCreator.h"
 
 using namespace shape_printer;
 using namespace shape_printer::shape_extension;
@@ -40,6 +41,12 @@ int main() {
     streamOut.setOutput(file);
     printShape.setOutput(streamOut);
     printShape(10);
+
+    // print a diamond shape to a BMP file
+    BMPCreator bmpCreator("diamond.bmp");
+    bmpCreator.setColors(255, 0, 0, 255);   // red color
+    printShape.setOutput(bmpCreator);
+    printShape(20);
 
     return 0;
 }
