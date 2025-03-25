@@ -60,8 +60,8 @@ void BMPCreator::saveBMP(const std::vector<std::vector<bool>>& image) const {
     file.write(reinterpret_cast<const char*>(bmpfileheader), sizeof(bmpfileheader));
     file.write(reinterpret_cast<const char*>(bmpinfoheader), sizeof(bmpinfoheader));
 
-    for (int y = height - 1; y >= 0; y--) {
-        for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
             unsigned char pixel[4] = {blue, green, red, alpha}; // BGRA format
             if (!image[y][x]) {
                 pixel[0] = pixel[1] = pixel[2] = 0; // Black color for background

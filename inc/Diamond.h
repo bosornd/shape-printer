@@ -7,18 +7,44 @@
 namespace shape_printer {
 namespace shape_extension {
 
-// Declare the insideDiamond function
+/**
+ * @brief Checks if a point is inside a diamond shape.
+ * @param x The x-coordinate of the point.
+ * @param y The y-coordinate of the point.
+ * @param n The size parameter of the shape.
+ * @return True if the point is inside the diamond, false otherwise.
+ */
 bool insideDiamond(int x, int y, int n);
 
-// Define the InsideDiamond functor extending InsideShape
+/**
+ * @class InsideDiamond
+ * @brief Functor for checking if a point is inside a diamond shape.
+ */
 class InsideDiamond : public shape_printer::InsideShape {
 public:
+    /**
+     * @brief Checks if a point is inside the diamond shape.
+     * @param x The x-coordinate of the point.
+     * @param y The y-coordinate of the point.
+     * @param n The size parameter of the shape.
+     * @return True if the point is inside the diamond, false otherwise.
+     */
     bool operator()(int x, int y, int n) const override;
 };
 
-// Define the Diamond class extending Shape
+/**
+ * @class Diamond
+ * @brief Class for diamond shapes.
+ */
 class Diamond : public shape_printer::Shape {
 public:
+    /**
+     * @brief Checks if a point is inside the diamond shape.
+     * @param x The x-coordinate of the point.
+     * @param y The y-coordinate of the point.
+     * @param n The size parameter of the shape.
+     * @return True if the point is inside the diamond, false otherwise.
+     */
     bool inside(int x, int y, int n) const override;
 };
 

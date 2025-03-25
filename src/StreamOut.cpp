@@ -8,12 +8,12 @@ StreamOut::StreamOut(std::ostream& output, std::string inChar, std::string outCh
     : output(&output), inChar(inChar), outChar(outChar), eolChar(eolChar) {}
 
 // Set the output stream
-void StreamOut::setOutput(std::ostream& newOutput) {
+ void StreamOut::setOutput(std::ostream& newOutput) {
     output = &newOutput;
 }
 
 // Set the characters for printing
-void StreamOut::setCharacters(const std::string& newInChar, const std::string& newOutChar, const std::string& newEolChar) {
+ void StreamOut::setCharacters(const std::string& newInChar, const std::string& newOutChar, const std::string& newEolChar) {
     inChar = newInChar;
     outChar = newOutChar;
     eolChar = newEolChar;
@@ -24,11 +24,11 @@ void StreamOut::operator()(const std::vector<std::vector<bool>>& image) const {
     for (const auto& row : image) {
         for (bool pixel : row) {
             if (pixel)
-                *output << inChar;
+                *output << inChar;  // Inside shape
             else
-                *output << outChar;
+                *output << outChar; // Outside shape
         }
-        *output << eolChar;
+        *output << eolChar;  // End of line
     }
 }
 

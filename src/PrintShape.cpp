@@ -24,12 +24,19 @@ void PrintShape::setOutput(std::function<void(const std::vector<std::vector<bool
 }
 
 void PrintShape::operator()(int n) const {
+    // Create a 2D boolean array to represent the image
     std::vector<std::vector<bool>> image(2 * n - 1, std::vector<bool>(2 * n - 1, false));
-    for (int y = n - 1; y >= -n + 1; y--) {
-        for (int x = -n + 1; x <= n - 1; x++) {
+    
+    // Fill the image by checking if each point is inside the shape
+    // Coordinate transformation: convert from mathematical coordinates to array indices
+    for (int y = n - 1; y >= -n + 1; y--) {           // y-axis points upward in math coords
+        for (int x = -n + 1; x <= n - 1; x++) {       // x-axis points right
+            // Transform (x,y) to array indices (row, col)
             image[n - 1 - y][x + n - 1] = insideShape(x, y, n);
         }
     }
+    
+    // Output the generated image
     output(image);
 }
 
