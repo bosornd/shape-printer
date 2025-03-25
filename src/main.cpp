@@ -18,16 +18,16 @@ int main() {
     PrintShape printShape([](int x, int y, int n) { return std::abs(x) + std::abs(y) < n; }, streamOut);
 
     // case 2. print a diamond shape using general function
-    printShape.setInsideShape(insideDiamond);
+    printShape.setShape(insideDiamond);
     printShape(2);
 
     // case 3. print a diamond shape using InsideShape functor
-    printShape.setInsideShape(InsideDiamond());
+    printShape.setShape(InsideDiamond());
     printShape(3);
 
     // case 4. print a diamond shape using Shape instance
     Diamond diamond;
-    printShape.setInsideShape(diamond);
+    printShape.setShape(diamond);
     printShape(4);
 
     // change printing characters
