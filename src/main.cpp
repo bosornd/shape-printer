@@ -23,7 +23,7 @@ int main() {
     // Case 1: Using a lambda function to define the shape
     // The lambda checks if |x| + |y| < n (diamond shape)
     PrintShape printShape([](int x, int y, int n) { return std::abs(x) + std::abs(y) < n; }, streamOut);
-    // Output a diamond of size 1 (by default)
+    printShape(1);  // Output a diamond of size 1
     
     // Case 2: Using a standalone function
     // insideDiamond is defined in Diamond.cpp
