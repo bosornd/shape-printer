@@ -16,6 +16,7 @@ int main() {
 
     // case 1. print a diamond shape using lambda function
     PrintShape printShape([](int x, int y, int n) { return std::abs(x) + std::abs(y) < n; }, streamOut);
+    printShape(1);
 
     // case 2. print a diamond shape using general function
     printShape.setShape(insideDiamond);
