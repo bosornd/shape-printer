@@ -8,14 +8,14 @@ classDiagram
   direction LR
   class Output {
     <<interface>>
-    + operator()(bool image)
+    + operator()(bool_image)
   }
   class BMPCreator {
     - file
     - color
     + BMPCreator(file, color)
     + setColor(color)
-    + operator()(bool_image) override
+    + operator()(bool_image)
   }
   Output <|.. BMPCreator
 ```
