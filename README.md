@@ -6,7 +6,7 @@
 
 ```mermaid
 classDiagram
-  direction RL
+  direction LR
   class PrintShape {
     - insideShape
     - output
