@@ -1,6 +1,7 @@
 # 1_print_shape_using_inside_shape
 
 ## Mission
+* Create C++ project that is shape-printer.
 * Define printShape function that print a shape using the given insideShape function.
 * Define insideDiamond function.
 
