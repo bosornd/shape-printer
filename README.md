@@ -12,7 +12,7 @@ classDiagram
     + PrintShape(insideShape, output, characters)
     + setOutput(output)
     + setCharacters(characters)
-    + operator()(int n)
+    + operator()(size)
   }
 ```
 ```c++
