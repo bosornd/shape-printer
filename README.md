@@ -15,7 +15,7 @@ classDiagram
     - color
     + BMPCreator(file, color)
     + setColor(color)
-    + operator()(bool image) override
+    + operator()(bool_image) override
   }
   Output <|.. BMPCreator
 ```
