@@ -16,7 +16,7 @@ classDiagram
   }
   class Output {
     <<interface>>
-    + operator()(bool image)
+    + operator()(bool_image)
   }
   class StreamOut {
     - output
@@ -24,7 +24,7 @@ classDiagram
     + StreamOut(output, characters)
     + setOutput(output)
     + setCharacters(characters)
-    + operator()(bool image) override
+    + operator()(bool_image)
   }
   Output <|.. StreamOut
   PrintShape --> Output
