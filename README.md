@@ -8,18 +8,10 @@ classDiagram
   class PrintShape {
     - insideShape
     + PrintShape(insideShape)
-    + operator()(int n)
+    + operator()(size)
   }
 ```
 ```c++
-class PrintShape {
-    std::function<bool(int, int, int)> insideShape;
-
-public:
-    PrintShape(std::function<bool(int, int, int)> insideShape);
-    void operator()(int n) const;
-};
-
 int main() {
     PrintShape printShape([](int x, int y, int n) { return std::abs(x) + std::abs(y) < n; });
     printShape(1);
