@@ -13,6 +13,7 @@ using namespace shape_printer::output_extension;
 int main() {
     // Create a StreamOut instance for console output
     StreamOut streamOut;
+    printShape(1);
 
     // case 1. print a diamond shape using lambda function
     PrintShape printShape([](int x, int y, int n) { return std::abs(x) + std::abs(y) < n; }, streamOut);
