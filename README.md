@@ -48,5 +48,5 @@ The Shape class is a base class that can be extended with Diamond, Cross, Circle
 The Shape class has an Output instance which is set using the constructor.
 The Shape class has a print(rows) which creates a Boolean image using inside() and prints it via the Output instance.
 The extending classes implement inside(x, y, rows) that returns whether the given (x, y) is inside the shape.
-x and y are in the range [-rows+1, rows-1].
+(0, 0) is at the center of the shape.
 ```
