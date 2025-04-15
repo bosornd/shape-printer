@@ -39,7 +39,7 @@ int main() {
     // print a diamond shape to a file
     std::ofstream file("diamond.txt");
     streamOut.setOutput(file);
-    printShape.setOutput(streamOut);
+//    printShape.setOutput(streamOut);    // no needs to setOutput again!!!
     printShape(10);
 
     return 0;
