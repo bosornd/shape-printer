@@ -16,7 +16,7 @@ By designing the output methods to be easily extendable, future modifications an
 
 In this design, the `PrintShape` class is responsible for setting the output method and the characters used for printing the shape. The class will have the following methods:
 
-- `setOutput(output_stream)`: Sets the output method (e.g., string, file, BMP).
+- `setOutput(output_stream)`: Sets the output method (e.g., console, string, file).
 - `setCharacters(characters)`: Sets the characters used to represent the shape.
 
 ```mermaid
